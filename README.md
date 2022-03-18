@@ -5,6 +5,10 @@
 
 입사한 회사별로 수료생 이력서를 확인하실 수 있으며, 이 이력서들은 주기적으로 새롭게 업로드 됩니다.
 
+- F-Lab에 대해 알아보기 : https://f-lab.kr
+- 진행 중인 프로젝트 보기 : https://github.com/f-lab-edu
+- F-Lab 채용 : https://recruiting.f-lab.kr
+
 <br/>
 
 ### 배포 이유
