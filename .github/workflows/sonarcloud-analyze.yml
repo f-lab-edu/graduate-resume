@@ -1,0 +1,39 @@
+name: F-Lab SonarCloud Code Analyze
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+env:
+  CACHED_DEPENDENCIES_PATHS: '**/node_modules'
+
+jobs:
+  CodeAnalyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set SonarCloud Project Key
+        run: |
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
+          ORG_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
+          SONAR_PROJECT_KEY="${ORG_NAME}_${REPO_NAME}"
+          echo "SONAR_PROJECT_KEY=$SONAR_PROJECT_KEY" >> $GITHUB_ENV 
+
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        id: analyze-sonarcloud
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_BOT }}
+          SONAR_TOKEN: ${{ secrets.SECRET_SONARQUBE }}
+        with:
+          args:
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=f-lab-edu-1
+
+          
